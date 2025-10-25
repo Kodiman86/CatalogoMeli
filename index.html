@@ -1,41 +1,325 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo de Artículos</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 text-gray-800">
-  <!-- Header -->
-  <header class="bg-white shadow-md py-6">
-    <h1 class="text-3xl font-bold text-center text-blue-600">✨ Catálogo de Productos ✨</h1>
-    <p class="text-center text-gray-600 mt-2">Explora nuestros artículos y compra fácilmente en línea</p>
-  </header>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos - Tienda Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Catálogo -->
-  <main class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    
-    <!-- Ejemplo de producto -->
-    <div class="bg-white shadow-lg rounded-2xl overflow-hidden hover:scale-105 transform transition">
-      <img src="https://via.placeholder.com/300x200" alt="Producto" class="w-full h-48 object-cover">
-      <div class="p-4">
-        <h2 class="text-lg font-semibold text-gray-900">Título del Producto</h2>
-        <p class="text-gray-600 text-sm mt-2">Descripción breve del producto, materiales o beneficios principales.</p>
-        <a href="https://tu-enlace-de-compra.com" target="_blank" 
-           class="block mt-4 text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-          Comprar ahora
-        </a>
-      </div>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f59e0b;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            font-size: 1rem;
+        }
+
+        .buy-button {
+            background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .buy-button:hover {
+            background: linear-gradient(120deg, var(--primary-dark), #4338ca);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .buy-button i {
+            margin-left: 8px;
+        }
+
+        .featured-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .product-image-container {
+            position: relative;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header-content p {
+                font-size: 1rem;
+            }
+            
+            .container {
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Tienda Premium</h1>
+            <p>Descubre nuestra colección exclusiva de productos de alta calidad</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Nuestros Productos</h2>
+        <div class="products-grid">
+            <!-- Producto 1 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://placehold.co/400x300/6366f1/white?text=Producto+1" alt="Producto 1" class="product-image">
+                    <div class="featured-tag">¡Nuevo!</div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Auriculares Bluetooth Premium</h3>
+                    <p class="product-description">Auriculares inalámbricos con cancelación de ruido activa, batería de larga duración y sonido envolvente de alta fidelidad.</p>
+                    <a href="https://example.com/comprar/auriculares" class="buy-button">Comprar Ahora <i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://placehold.co/400x300/10b981/white?text=Producto+2" alt="Producto 2" class="product-image">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Reloj Inteligente Deportivo</h3>
+                    <p class="product-description">Monitoriza tu salud, actividad física y recibe notificaciones en tiempo real con este reloj inteligente resistente al agua.</p>
+                    <a href="https://example.com/comprar/reloj" class="buy-button">Comprar Ahora <i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://placehold.co/400x300/f59e0b/white?text=Producto+3" alt="Producto 3" class="product-image">
+                    <div class="featured-tag">Oferta</div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Cámara Digital 4K</h3>
+                    <p class="product-description">Captura momentos inolvidables con esta cámara digital profesional que graba en resolución 4K y tiene estabilización óptica.</p>
+                    <a href="https://example.com/comprar/camara" class="buy-button">Comprar Ahora <i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://placehold.co/400x300/8b5cf6/white?text=Producto+4" alt="Producto 4" class="product-image">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Altavoz Bluetooth Portátil</h3>
+                    <p class="product-description">Altavoz inalámbrico con sonido 360°, resistente al agua y batería que dura hasta 20 horas. Perfecto para tus aventuras.</p>
+                    <a href="https://example.com/comprar/altavoz" class="buy-button">Comprar Ahora <i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+
+            <!-- Producto 5 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://placehold.co/400x300/ef4444/white?text=Producto+5" alt="Producto 5" class="product-image">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Teclado Mecánico Gaming</h3>
+                    <p class="product-description">Teclado mecánico RGB con switches personalizables, anti-ghosting y diseño ergonómico para largas sesiones de juego.</p>
+                    <a href="https://example.com/comprar/teclado" class="buy-button">Comprar Ahora <i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+
+            <!-- Producto 6 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://placehold.co/400x300/06b6d4/white?text=Producto+6" alt="Producto 6" class="product-image">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Mochila Antirrobo para Portátil</h3>
+                    <p class="product-description">Mochila inteligente con puerto USB, compartimentos acolchados y sistema de seguridad antirrobo. Ideal para viajes y trabajo.</p>
+                    <a href="https://example.com/comprar/mochila" class="buy-button">Comprar Ahora <i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Copia y pega más bloques como este para más productos -->
-    
-  </main>
+    <footer>
+        <p>&copy; 2024 Tienda Premium. Todos los derechos reservados.</p>
+        <p>Diseñado con ❤️ para GitHub Pages</p>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="text-center py-6 text-gray-500 text-sm">
-    © 2025 Tu Marca. Todos los derechos reservados.
-  </footer>
+    <script>
+        // Simple animation for product cards on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            productCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
 </html>
+

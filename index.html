@@ -206,15 +206,19 @@
             border-radius: 2px;
         }
 
-        .image-error {
+        .image-placeholder {
+            height: 200px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
-            color: var(--gray);
-            padding: 20px;
-            text-align: center;
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .image-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -232,10 +236,15 @@
             <!-- Producto 1 -->
             <div class="product-card">
                 <div class="product-image-container">
+                    <!-- Intenta con Google Drive primero, si falla usa imagen de respaldo -->
                     <img src="https://ibb.co/chBm73Q9" 
                          alt="Recámara Valentina King Size" 
                          class="product-image"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=300&q=80';">
+                         onerror="this.style.display='none'; document.getElementById('placeholder-1').style.display='flex';">
+                    <div id="placeholder-1" class="image-placeholder" style="display:none;">
+                        <i class="fas fa-bed"></i>
+                        <span>Imagen no disponible</span>
+                    </div>
                     <div class="featured-tag">¡Nuevo!</div>
                 </div>
                 <div class="product-content">
